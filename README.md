@@ -20,38 +20,15 @@ Annotation layer for [pdf.js](https://github.com/mozilla/pdf.js)
 - Agnostic of backend, just supply your own `StoreAdapter` to fetch/store data.
 - Prescribe annotation format.
 
-## Example
+## Examples
 
-```js
-import __pdfjs from 'pdfjs-dist/build/pdf';
-import PDFJSAnnotate from 'pdfjs-annotate';
-import MyStoreAdapter from './myStoreAdapter';
+See more [examples](/docs/ folder).
 
-const { UI } = PDFJSAnnotate;
-const VIEWER = document.getElementById('viewer');
-const RENDER_OPTIONS = {
-  documentId: 'MyPDF.pdf',
-  pdfDocument: null,
-  scale: 1,
-  rotate: 0
-};
-
-pdfjsLib.workerSrc = 'pdf.worker.js';
-PDFJSAnnotate.setStoreAdapter(MyStoreAdapter);
-
-pdfjsLib.getDocument(RENDER_OPTIONS.documentId).then((pdf) => {
-  RENDER_OPTIONS.pdfDocument = pdf;
-  VIEWER.appendChild(UI.createPage(1));
-  UI.renderPage(1, RENDER_OPTIONS);
-});
-
-```
+## ATTENTION!
 
 ``` in HTML file, insert "viewport" with scale disabled because Safari in iPhone only work with it 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 ```
-
-See more [examples](/docs/ folder).
 
 ## Documentation
 
