@@ -44,9 +44,14 @@ pdfjsLib.getDocument(RENDER_OPTIONS.documentId).then((pdf) => {
   VIEWER.appendChild(UI.createPage(1));
   UI.renderPage(1, RENDER_OPTIONS);
 });
+
 ```
 
-See more [examples](https://github.com/instructure/pdf-annotate.js/blob/master/web/index.js).
+``` in HTML file, insert "viewport" with scale disabled because Safari in iPhone only work with it 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+```
+
+See more [examples](/docs/ folder).
 
 ## Documentation
 
