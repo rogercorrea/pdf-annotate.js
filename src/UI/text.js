@@ -74,16 +74,16 @@ function saveText() {
     let { documentId, pageNumber } = getMetadata(svg);
     let rect = svg.getBoundingClientRect();
     let annotation = Object.assign({
-        type: 'textbox',
-        size: _textSize,
-        color: _textColor,
-        content: input.value.trim()
-      }, scaleDown(svg, {
-        x: clientX - rect.left,
-        y: clientY -  rect.top,
-        width: input.offsetWidth,
-        height: input.offsetHeight
-      })
+      type: 'textbox',
+      size: _textSize,
+      color: _textColor,
+      content: input.value.trim()
+    }, scaleDown(svg, {
+      x: clientX - rect.left,
+      y: clientY - rect.top,
+      width: input.offsetWidth,
+      height: input.offsetHeight
+    })
     );
 
     PDFJSAnnotate.getStoreAdapter().addAnnotation(documentId, pageNumber, annotation)
@@ -91,7 +91,7 @@ function saveText() {
         appendChild(svg, annotation);
       });
   }
-  
+
   closeInput();
 }
 
@@ -99,11 +99,15 @@ function saveText() {
  * Close the input
  */
 function closeInput() {
-  if (input) {
-    input.removeEventListener('blur', handleInputBlur);
-    input.removeEventListener('keyup', handleInputKeyup);
-    document.body.removeChild(input);
-    input = null;
+  try {
+    if (input) {
+      input.removeEventListener('blur', handleInputBlur);
+      input.removeEventListener('keyup', handleInputKeyup);
+      document.body.removeChild(input);
+      input = null;
+    }
+  } catch{
+    console.log('Try/catch is necessary because exist a error in Safari');
   }
 }
 

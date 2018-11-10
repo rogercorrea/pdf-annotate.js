@@ -74,27 +74,37 @@
 	};
 
 	_2.default.setStoreAdapter(new _2.default.LocalStoreAdapter());
-	PDFJS.workerSrc = './shared/pdf.worker.js';
+	pdfjsLib.workerSrc = './shared/pdf.worker.js';
 
 	// Render stuff
+	let renderedPages = [];
+	let okToRender = false;
 	var NUM_PAGES = 0;
 	document.getElementById('content-wrapper').addEventListener('scroll', function (e) {
-	  var visiblePageNum = Math.round(e.target.scrollTop / PAGE_HEIGHT) + 1;
-	  var visiblePage = document.querySelector('.page[data-page-number="' + visiblePageNum + '"][data-loaded="false"]');
-	  if (visiblePage) {
-	    setTimeout(function () {
-	      UI.renderPage(visiblePageNum, RENDER_OPTIONS);
-	    });
-	  }
+		var visiblePageNum = Math.round(e.target.scrollTop / PAGE_HEIGHT) + 1;
+		var visiblePage = document.querySelector('.page[data-page-number="' + visiblePageNum + '"][data-loaded="false"]');
+
+		if (renderedPages.indexOf(visiblePageNum) == -1) {
+			okToRender = true;
+			renderedPages.push(visiblePageNum);
+		} else {
+			okToRender = false;
+		}
+
+		if (visiblePage && okToRender) {
+			setTimeout(function () {
+				UI.renderPage(visiblePageNum, RENDER_OPTIONS);
+			});
+		}
 	});
 
 	function render() {
-	  PDFJS.getDocument(RENDER_OPTIONS.documentId).then(function (pdf) {
+	  pdfjsLib.getDocument(RENDER_OPTIONS.documentId).then(function (pdf) {
 	    RENDER_OPTIONS.pdfDocument = pdf;
 
 	    var viewer = document.getElementById('viewer');
 	    viewer.innerHTML = '';
-	    NUM_PAGES = pdf.pdfInfo.numPages;
+	    NUM_PAGES = pdf._pdfInfo.numPages;
 	    for (var i = 0; i < NUM_PAGES; i++) {
 	      var page = UI.createPage(i + 1);
 	      viewer.appendChild(page);
@@ -2331,7 +2341,7 @@
 		 * Save a text annotation from input
 		 */function saveText(){if(input.value.trim().length>0){var _ret=function(){var clientX=parseInt(input.style.left,10);var clientY=parseInt(input.style.top,10);var svg=(0,_utils.findSVGAtPoint)(clientX,clientY);if(!svg){return{v:void 0};}var _getMetadata=(0,_utils.getMetadata)(svg);var documentId=_getMetadata.documentId;var pageNumber=_getMetadata.pageNumber;var rect=svg.getBoundingClientRect();var annotation=Object.assign({type:'textbox',size:_textSize,color:_textColor,content:input.value.trim()},(0,_utils.scaleDown)(svg,{x:clientX-rect.left,y:clientY-rect.top,width:input.offsetWidth,height:input.offsetHeight}));_PDFJSAnnotate2.default.getStoreAdapter().addAnnotation(documentId,pageNumber,annotation).then(function(annotation){(0,_appendChild2.default)(svg,annotation);});}();if((typeof _ret==='undefined'?'undefined':_typeof(_ret))==="object")return _ret.v;}closeInput();}/**
 		 * Close the input
-		 */function closeInput(){if(input){input.removeEventListener('blur',handleInputBlur);input.removeEventListener('keyup',handleInputKeyup);document.body.removeChild(input);input=null;}}/**
+		 */function closeInput(){try{if(input){input.removeEventListener('blur',handleInputBlur);input.removeEventListener('keyup',handleInputKeyup);document.body.removeChild(input);input=null;}}catch{}}/**
 		 * Set the text attributes
 		 *
 		 * @param {Number} textSize The size of the text
