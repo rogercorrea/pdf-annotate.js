@@ -1,4 +1,4 @@
-#UPDATED VERSION
+# UPDATED VERSION
 
 Fixed problems in my fork and updated PdfJS lib to docs/ example (I don't can update in NPM package. I always have more problems.)
 
@@ -25,8 +25,9 @@ Annotation layer for [pdf.js](https://github.com/mozilla/pdf.js)
 See more [examples](/docs/ folder).
 
 ## ATTENTION!
+In HTML file, insert "viewport" with scale disabled because Safari in iOS 12 only work with it
 
-``` in HTML file, insert "viewport" with scale disabled because Safari in iPhone only work with it 
+``` 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 ```
 
