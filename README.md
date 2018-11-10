@@ -28,10 +28,10 @@ const RENDER_OPTIONS = {
   rotate: 0
 };
 
-PDFJS.workerSrc = 'pdf.worker.js';
+pdfjsLib.workerSrc = 'pdf.worker.js';
 PDFJSAnnotate.setStoreAdapter(MyStoreAdapter);
 
-PDFJS.getDocument(RENDER_OPTIONS.documentId).then((pdf) => {
+pdfjsLib.getDocument(RENDER_OPTIONS.documentId).then((pdf) => {
   RENDER_OPTIONS.pdfDocument = pdf;
   VIEWER.appendChild(UI.createPage(1));
   UI.renderPage(1, RENDER_OPTIONS);
