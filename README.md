@@ -2,9 +2,9 @@
 
 Fixed problems in my fork and updated PdfJS lib to docs/ example (I don't can update in NPM package. I always have more problems.)
 
-- Annotation and highlighting worked in Safari (iPhone with iOS 12)
-- Fix bug with Canvas that entering in repeat mode (overflow error)
-- Fix render bugs. I updated PdfJS version and my render now is good
+- Annotation and highlighting working in Safari (iPhone with iOS 12)
+- Fixed bug with Canvas that entering in repeat mode (overflow error)
+- Fixed render bugs. I updated PdfJS version and my render now is good
 
 # pdf-annotate.js
 
