@@ -14,19 +14,22 @@ module.exports = {
   plugins: plugins,
   entry: './index.js',
   output: {
+    path: __dirname + '/build',
     filename: 'dist/' + fileName + '.js',
     library: 'PDFAnnotate',
     libraryTarget: 'umd'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015'],
-          plugins: ['add-module-exports']
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015'],
+            plugins: ['add-module-exports']
+          }
         }
       }
     ]

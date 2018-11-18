@@ -13,27 +13,37 @@ let RENDER_OPTIONS = {
 };
 
 PDFJSAnnotate.setStoreAdapter(new PDFJSAnnotate.LocalStoreAdapter());
-PDFJS.workerSrc = './shared/pdf.worker.js';
+pdfjsLib.workerSrc = './shared/pdf.worker.js';
 
 // Render stuff
-let NUM_PAGES = 0;
-document.getElementById('content-wrapper').addEventListener('scroll', function (e) {
-  let visiblePageNum = Math.round(e.target.scrollTop / PAGE_HEIGHT) + 1;
-  let visiblePage = document.querySelector(`.page[data-page-number="${visiblePageNum}"][data-loaded="false"]`);
-  if (visiblePage) {
-    setTimeout(function () {
-      UI.renderPage(visiblePageNum, RENDER_OPTIONS);
-    });
-  }
+let renderedPages = [];
+let okToRender = false;
+var NUM_PAGES = 0;
+document.getElementById('content-wrapper').addEventListener('scroll', function(e) {
+    var visiblePageNum = Math.round(e.target.scrollTop / PAGE_HEIGHT) + 1;
+    var visiblePage = document.querySelector('.page[data-page-number="' + visiblePageNum + '"][data-loaded="false"]');
+
+    if (renderedPages.indexOf(visiblePageNum) == -1) {
+        okToRender = true;
+        renderedPages.push(visiblePageNum);
+    } else {
+        okToRender = false;
+    }
+
+    if (visiblePage && okToRender) {
+        setTimeout(function() {
+            UI.renderPage(visiblePageNum, RENDER_OPTIONS);
+        });
+    }
 });
 
 function render() {
-  PDFJS.getDocument(RENDER_OPTIONS.documentId).then((pdf) => {
+  pdfjsLib.getDocument(RENDER_OPTIONS.documentId).then((pdf) => {
     RENDER_OPTIONS.pdfDocument = pdf;
 
     let viewer = document.getElementById('viewer');
     viewer.innerHTML = '';
-    NUM_PAGES = pdf.pdfInfo.numPages;
+    NUM_PAGES = pdf._pdfInfo.numPages;
     for (let i=0; i<NUM_PAGES; i++) {
       let page = UI.createPage(i+1);
       viewer.appendChild(page);

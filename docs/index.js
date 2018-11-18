@@ -80,22 +80,22 @@
 	let renderedPages = [];
 	let okToRender = false;
 	var NUM_PAGES = 0;
-	document.getElementById('content-wrapper').addEventListener('scroll', function (e) {
-		var visiblePageNum = Math.round(e.target.scrollTop / PAGE_HEIGHT) + 1;
-		var visiblePage = document.querySelector('.page[data-page-number="' + visiblePageNum + '"][data-loaded="false"]');
+	document.getElementById('content-wrapper').addEventListener('scroll', function(e) {
+			var visiblePageNum = Math.round(e.target.scrollTop / PAGE_HEIGHT) + 1;
+			var visiblePage = document.querySelector('.page[data-page-number="' + visiblePageNum + '"][data-loaded="false"]');
 
-		if (renderedPages.indexOf(visiblePageNum) == -1) {
-			okToRender = true;
-			renderedPages.push(visiblePageNum);
-		} else {
-			okToRender = false;
-		}
+			if (renderedPages.indexOf(visiblePageNum) == -1) {
+					okToRender = true;
+					renderedPages.push(visiblePageNum);
+			} else {
+					okToRender = false;
+			}
 
-		if (visiblePage && okToRender) {
-			setTimeout(function () {
-				UI.renderPage(visiblePageNum, RENDER_OPTIONS);
-			});
-		}
+			if (visiblePage && okToRender) {
+					setTimeout(function() {
+							UI.renderPage(visiblePageNum, RENDER_OPTIONS);
+					});
+			}
 	});
 
 	function render() {
@@ -104,7 +104,7 @@
 
 	    var viewer = document.getElementById('viewer');
 	    viewer.innerHTML = '';
-	    NUM_PAGES = pdf._pdfInfo.numPages;
+	    NUM_PAGES = pdf.__pdfInfo.numPages;
 	    for (var i = 0; i < NUM_PAGES; i++) {
 	      var page = UI.createPage(i + 1);
 	      viewer.appendChild(page);

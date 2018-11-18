@@ -19,7 +19,7 @@ function handleDocumentMouseup(e) {
   if (input || !findSVGAtPoint(e.clientX, e.clientY)) {
     return
   }
-  
+
   input = document.createElement('input');
   input.setAttribute('id', 'pdf-annotate-point-input');
   input.setAttribute('placeholder', 'Enter comment');
@@ -72,11 +72,11 @@ function savePoint() {
     let rect = svg.getBoundingClientRect();
     let { documentId, pageNumber } = getMetadata(svg);
     let annotation = Object.assign({
-        type: 'point'
-      }, scaleDown(svg, {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-      })
+      type: 'point'
+    }, scaleDown(svg, {
+      x: clientX - rect.left,
+      y: clientY - rect.top
+    })
     );
 
     PDFJSAnnotate.getStoreAdapter().addAnnotation(documentId, pageNumber, annotation)
@@ -98,10 +98,14 @@ function savePoint() {
  * Close the input element
  */
 function closeInput() {
-  input.removeEventListener('blur', handleInputBlur);
-  input.removeEventListener('keyup', handleInputKeyup);
-  document.body.removeChild(input);
-  input = null;
+  try {
+    input.removeEventListener('blur', handleInputBlur);
+    input.removeEventListener('keyup', handleInputKeyup);
+    document.body.removeChild(input);
+    input = null;
+  } catch (e) {
+
+  }
 }
 
 /**

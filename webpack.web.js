@@ -5,11 +5,11 @@ module.exports = {
 
   output: {
     filename: 'index.js',
-    path: 'docs'
+    path: __dirname + '\docs'
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,

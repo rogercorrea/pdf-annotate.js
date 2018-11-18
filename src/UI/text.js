@@ -106,7 +106,7 @@ function closeInput() {
       document.body.removeChild(input);
       input = null;
     }
-  } catch{
+  } catch(e){
     console.log('Try/catch is necessary because exist a error in Safari');
   }
 }

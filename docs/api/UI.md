@@ -271,13 +271,13 @@ const RENDER_OPTIONS = {
   rotate: 0
 };
 
-PDFJS.getDocument(RENDER_OPTIONS.documentId).then(pdf => {
+pdfjsLib.getDocument(RENDER_OPTIONS.documentId).then(pdf => {
   RENDER_OPTIONS.pdfDocument = pdf;
 
   // Create a page in the DOM for every page in the PDF
   let viewer = document.getElementById('viewer');
   viewer.innerHTML = '';
-  let numPages = pdf.pdfInfo.numPages;
+  let numPages = pdf._pdfInfo.numPages;
   for (let i=0; i<numPages; i++) {
     let page = UI.createPage(i+1);
     viewer.appendChild(page);
